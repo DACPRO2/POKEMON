@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 public class POKE {
 
+    
     public static void main(String[] args) {
        Scanner sc = new Scanner(System.in);
         
@@ -89,6 +90,119 @@ public class POKE {
         // ahora queremos la opcion del jugador a elegir
         
         int opcionPokemon = sc.nextInt();
+        
+        // jugador
+        Pokemon jugador =
+                pokemones.get(opcionPokemon - 1);
+
+        // enemigo aleatorio
+        int random =
+                (int)(Math.random() * pokemones.size());
+
+        Pokemon enemigo =
+                pokemones.get(random);
+
+        // evitar mismo pokemon
+        while (enemigo == jugador) {
+
+            random =
+                    (int)(Math.random() * pokemones.size());
+
+            enemigo =
+                    pokemones.get(random);
+        }
+
+        System.out.println("\nTu Pokémon es: "
+                + jugador.nombre);
+
+        System.out.println("El enemigo eligió: "
+                + enemigo.nombre);
+
+        // =====================================
+        // BATALLA
+        // =====================================
+
+        while (jugador.estaVivo() &&
+               enemigo.estaVivo()) {
+
+            // =====================================
+            // TURNO JUGADOR
+            // =====================================
+
+            System.out.println("\n===== TU TURNO =====");
+
+            System.out.println("Tu vida: "
+                    + jugador.vida);
+
+            System.out.println("Vida enemigo: "
+                    + enemigo.vida);
+
+            // mostrar ataques
+            System.out.println("\nAtaques:");
+
+            for (int i = 0;
+                 i < jugador.ataques.size();
+                 i++) {
+
+                System.out.println(
+                        (i + 1) + ". "
+                        + jugador.ataques.get(i).nombre
+                );
+            }
+
+            int opcionAtaque =
+                    sc.nextInt();
+
+            Ataque ataqueElegido =
+                    jugador.ataques.get(
+                            opcionAtaque - 1
+                    );
+
+            jugador.atacar(
+                    enemigo,
+                    ataqueElegido
+            );
+
+            // =====================================
+            // TURNO ENEMIGO
+            // =====================================
+
+            if (enemigo.estaVivo()) {
+
+                System.out.println(
+                        "\n===== TURNO ENEMIGO ====="
+                );
+
+                int ataqueRandom =
+                        (int)(Math.random()
+                                * enemigo.ataques.size());
+
+                Ataque ataqueEnemigo =
+                        enemigo.ataques.get(
+                                ataqueRandom
+                        );
+
+                enemigo.atacar(
+                        jugador,
+                        ataqueEnemigo
+                );
+            }
+        }
+
+        // =====================================
+        // RESULTADO FINAL
+        // =====================================
+
+        System.out.println("\n===== RESULTADO =====");
+
+        if (jugador.estaVivo()) {
+
+            System.out.println("¡Ganaste!");
+
+        } else {
+
+            System.out.println("Perdiste...");
+        }
          
     }
 }
