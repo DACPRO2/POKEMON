@@ -1,189 +1,248 @@
 package com.mycompany.poke;
+
 import java.util.ArrayList;
 import java.util.Scanner;
+
 public class POKE {
-        public static int pedirOpcionValida(Scanner sc, int minimo, int maximo) {
 
-    int opcion;
+    public static int pedirOpcionValida(Scanner sc, int minimo, int maximo) {
 
-    while (true) {
+        int opcion;
 
-        if (sc.hasNextInt()) {
+        while (true) {
 
-            opcion = sc.nextInt();
+            if (sc.hasNextInt()) {
 
-            if (opcion >= minimo && opcion <= maximo) {
-                return opcion;
+                opcion = sc.nextInt();
+
+                if (opcion >= minimo && opcion <= maximo) {
+                    return opcion;
+                }
+            } else {
+                sc.next();
             }
-        } else {
-            sc.next(); // descarta texto inválido
+
+            System.out.print("❌ Opción inválida. Intenta nuevamente: ");
+        }
+    }
+// metodo para mostrar una quepeña barra de vida
+    public static String barraVida(int vida) {
+
+        String barra = "";
+
+        for (int i = 0; i < vida / 10; i++) {
+            barra += "█";
         }
 
-        System.out.print("Opción inválida. Intenta nuevamente: ");
+        return barra;
     }
-}
-    
+// metodo para mostrar un estado del pokemon mas amigable
+    public static void mostrarEstado(Pokemon jugador, Pokemon enemigo) {
+
+        System.out.println("\n═══════════════════════════════════════");
+
+        System.out.println("⚡ " + jugador.nombre);
+        System.out.println("❤️ Vida: " + jugador.vida);
+        System.out.println(barraVida(jugador.vida));
+
+        System.out.println();
+
+        System.out.println("👹 " + enemigo.nombre);
+        System.out.println("❤️ Vida: " + enemigo.vida);
+        System.out.println(barraVida(enemigo.vida));
+
+        System.out.println("═══════════════════════════════════════");
+    }
+
     public static void main(String[] args) {
-       Scanner sc = new Scanner(System.in);
-        
-// creacion de ataques 
+
+        System.out.println(
+"████████╗ ██████╗ ██████╗ ███╗   ██╗███████╗ ██████╗ \n" +
+"╚══██╔══╝██╔═══██╗██╔══██╗████╗  ██║██╔════╝██╔═══██╗\n" +
+"   ██║   ██║   ██║██████╔╝██╔██╗ ██║█████╗  ██║   ██║\n" +
+"   ██║   ██║   ██║██╔══██╗██║╚██╗██║██╔══╝  ██║   ██║\n" +
+"   ██║   ╚██████╔╝██║  ██║██║ ╚████║███████╗╚██████╔╝\n" +
+"   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝ ╚═════╝ \n");
+
+System.out.println(
+"██████╗  ██████╗ ██╗  ██╗███████╗███╗   ███╗ ██████╗ ███╗   ██╗\n" +
+"██╔══██╗██╔═══██╗██║ ██╔╝██╔════╝████╗ ████║██╔═══██╗████╗  ██║\n" +
+"██████╔╝██║   ██║█████╔╝ █████╗  ██╔████╔██║██║   ██║██╔██╗ ██║\n" +
+"██╔═══╝ ██║   ██║██╔═██╗ ██╔══╝  ██║╚██╔╝██║██║   ██║██║╚██╗██║\n" +
+"██║     ╚██████╔╝██║  ██╗███████╗██║ ╚═╝ ██║╚██████╔╝██║ ╚████║\n" +
+"╚═╝      ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═══╝");
+
+System.out.println("\n⚔️ ¡BIENVENIDO AL TORNEO POKÉMON! ⚔️\n");
+        Scanner sc = new Scanner(System.in);
+
+        // CREACIÓN DE ATAQUES
+
         Ataque impactrueno = new Ataque("Impactrueno", 20);
         Ataque colaFeroz = new Ataque("Cola Feroz", 15);
-       
-        
-        Ataque lanzallamas = new Ataque("Lanza llamas", 22);
+        Ataque rayo = new Ataque("Rayo", 28);
+        Ataque ataqueRapido = new Ataque("Ataque Rápido", 18);
+
+
+        Ataque lanzallamas = new Ataque("Lanzallamas", 22);
         Ataque arañazo = new Ataque("Arañazo", 12);
+        Ataque giroFuego = new Ataque("Giro Fuego", 26);
+        Ataque ascuas = new Ataque("Ascuas", 16);
+
 
         Ataque pistolaAgua = new Ataque("Pistola Agua", 18);
         Ataque burbuja = new Ataque("Burbuja", 14);
+        Ataque hidroBomba = new Ataque("Hidrobomba", 30);
+        Ataque acuaCola = new Ataque("Acua Cola", 20);
+
 
         Ataque hojaAfilada = new Ataque("Hoja Afilada", 19);
         Ataque latigoCepa = new Ataque("Látigo Cepa", 13);
+        Ataque rayoSolar = new Ataque("Rayo Solar", 29);
+        Ataque drenadoras = new Ataque("Drenadoras", 17);
+
 
         Ataque confusion = new Ataque("Confusión", 25);
         Ataque golpeMental = new Ataque("Golpe Mental", 17);
+        Ataque psiquico = new Ataque("Psíquico", 32);
+        Ataque ondaMental = new Ataque("Onda Mental", 22);
 
         Ataque rocaAfilada = new Ataque("Roca Afilada", 23);
         Ataque cabezazo = new Ataque("Cabezazo", 16);
-        
-        // ahora creare los pokemones para depues poderlos poner en el arraylist
-        
+        Ataque terremoto = new Ataque("Terremoto", 31);
+        Ataque avalancha = new Ataque("Avalancha", 24);
+
+        // POKÉMONS
+
         Pokemon pikachu = new Pokemon("Pikachu", 100, 5);
-        // ahora llamaremos al metodo agregarataque para que guarde los ataques
-        // de pikachu y asi haremos con todos
-        // lo ue hacemos es poner el pokemon.el metodo para agregar el ataque al arraylist y como parametro pues el ataque del personaje
-        
         pikachu.agregarAtaque(impactrueno);
         pikachu.agregarAtaque(colaFeroz);
-        // y asi con todos 
-        
-        Pokemon charmander = new Pokemon("Charmander", 100, 3);
+        pikachu.agregarAtaque(rayo);
+        pikachu.agregarAtaque(ataqueRapido);
 
+        Pokemon charmander = new Pokemon("Charmander", 100, 3);
         charmander.agregarAtaque(lanzallamas);
         charmander.agregarAtaque(arañazo);
+        charmander.agregarAtaque(giroFuego);
+        charmander.agregarAtaque(ascuas);
 
         Pokemon squirtle = new Pokemon("Squirtle", 110, 6);
-
         squirtle.agregarAtaque(pistolaAgua);
         squirtle.agregarAtaque(burbuja);
+        squirtle.agregarAtaque(hidroBomba);
+        squirtle.agregarAtaque(acuaCola);
 
         Pokemon bulbasaur = new Pokemon("Bulbasaur", 105, 4);
-
         bulbasaur.agregarAtaque(hojaAfilada);
         bulbasaur.agregarAtaque(latigoCepa);
+        bulbasaur.agregarAtaque(rayoSolar);
+        bulbasaur.agregarAtaque(drenadoras);
 
         Pokemon mewtwo = new Pokemon("Mewtwo", 120, 7);
-
         mewtwo.agregarAtaque(confusion);
         mewtwo.agregarAtaque(golpeMental);
+        mewtwo.agregarAtaque(psiquico);
+        mewtwo.agregarAtaque(ondaMental);
 
         Pokemon onix = new Pokemon("Onix", 130, 10);
-
         onix.agregarAtaque(rocaAfilada);
         onix.agregarAtaque(cabezazo);
-        
-        //ahora haremos un nuevo arraylist para agregar los pokemones
-        // y poderlos poner y llamar de una manera mas facil
+        onix.agregarAtaque(terremoto);
+        onix.agregarAtaque(avalancha);
+
+        // ARRAYLIST
 
         ArrayList<Pokemon> pokemones = new ArrayList<>();
-        
+
         pokemones.add(pikachu);
         pokemones.add(charmander);
         pokemones.add(squirtle);
         pokemones.add(bulbasaur);
         pokemones.add(mewtwo);
         pokemones.add(onix);
-        
-        // ahora crearemos todo lo que vera el usuario y el funcionamiento del juego
-        
-        System.out.println("-----BIENVENIDO A LA BATALLA POKEMON-----");
-        System.out.println("===== POKEMON =====");
-        System.out.println("Elige tu Pokémon:");
-        // con este for nos mostrara todos los pokemones guardados en el arraylist
-        // de pokemones
-        for (int i = 0; i < pokemones.size(); i++) {
-            System.out.println( (i + 1)+ ". "+ pokemones.get(i).nombre);
-            
-        }
-        
-        //queremos la opcion del jugador a elegir
-        
-       System.out.print("Selecciona un Pokémon: ");
 
-int opcionPokemon =
-        pedirOpcionValida(
-                sc,
-                1,
-                pokemones.size()
-        );
-        
-        // jugador
+        // MENÚ
+
+        System.out.println("═══════════════════════════════════════");
+        System.out.println("           TORNEO POKÉMON");
+        System.out.println("═══════════════════════════════════════");
+        System.out.println();
+
+        System.out.println("🎯 Elige tu Pokémon:\n");
+
+        for (int i = 0; i < pokemones.size(); i++) {
+
+            System.out.println(
+                    (i + 1) + ". "
+                    + pokemones.get(i).nombre
+                    + " ❤️ "
+                    + pokemones.get(i).vida
+            );
+        }
+
+        System.out.print("\nSelecciona un Pokémon: ");
+
+        int opcionPokemon =
+                pedirOpcionValida(
+                        sc,
+                        1,
+                        pokemones.size()
+                );
+
         Pokemon jugador =
                 pokemones.get(opcionPokemon - 1);
 
-        // enemigo aleatorio
         int random =
-                (int)(Math.random() * pokemones.size());
+                (int) (Math.random() * pokemones.size());
 
         Pokemon enemigo =
                 pokemones.get(random);
 
-        // evitar mismo pokemon
         while (enemigo == jugador) {
 
             random =
-                    (int)(Math.random() * pokemones.size());
+                    (int) (Math.random() * pokemones.size());
 
             enemigo =
                     pokemones.get(random);
         }
 
-        System.out.println("\nTu Pokémon es: "
+        System.out.println("\n⚡ Tu Pokémon es: "
                 + jugador.nombre);
 
-        System.out.println("El enemigo eligió: "
+        System.out.println("👹 El enemigo eligió: "
                 + enemigo.nombre);
 
-        // =====================================
-        // BATALLA
-        // =====================================
+        System.out.println("\n═══════════════════════════════════════");
+        System.out.println("         ¡COMIENZA LA BATALLA!");
+        System.out.println("═══════════════════════════════════════");
 
         while (jugador.estaVivo() &&
-               enemigo.estaVivo()) {
+                enemigo.estaVivo()) {
 
-            // =====================================
-            // TURNO JUGADOR
-            // =====================================
+            mostrarEstado(jugador, enemigo);
 
-            System.out.println("\n===== TU TURNO =====");
+            System.out.println("\n🔥 TU TURNO 🔥");
 
-            System.out.println("Tu vida: "
-                    + jugador.vida);
-
-            System.out.println("Vida enemigo: "
-                    + enemigo.vida);
-
-            // mostrar ataques
-            System.out.println("\nAtaques:");
+            System.out.println("\nAtaques disponibles:");
 
             for (int i = 0;
-                 i < jugador.ataques.size();
-                 i++) {
+                    i < jugador.ataques.size();
+                    i++) {
 
                 System.out.println(
                         (i + 1) + ". "
                         + jugador.ataques.get(i).nombre
                 );
             }
-          
-           System.out.print("Selecciona un ataque: ");
 
-int opcionAtaque =
-        pedirOpcionValida(
-                sc,
-                1,
-                jugador.ataques.size()
-        );
+            System.out.print("\nSelecciona un ataque: ");
+
+            int opcionAtaque =
+                    pedirOpcionValida(
+                            sc,
+                            1,
+                            jugador.ataques.size()
+                    );
 
             Ataque ataqueElegido =
                     jugador.ataques.get(
@@ -195,19 +254,15 @@ int opcionAtaque =
                     ataqueElegido
             );
 
-            // =====================================
-            // TURNO ENEMIGO
-            // =====================================
-
             if (enemigo.estaVivo()) {
 
                 System.out.println(
-                        "\n===== TURNO ENEMIGO ====="
+                        "\n⚔️ TURNO DEL ENEMIGO ⚔️"
                 );
 
                 int ataqueRandom =
-                        (int)(Math.random()
-                                * enemigo.ataques.size());
+                        (int) (Math.random()
+                        * enemigo.ataques.size());
 
                 Ataque ataqueEnemigo =
                         enemigo.ataques.get(
@@ -221,20 +276,19 @@ int opcionAtaque =
             }
         }
 
-        // =====================================
-        // RESULTADO FINAL
-        // =====================================
-
-        System.out.println("\n===== RESULTADO =====");
+        System.out.println("\n═══════════════════════════════════════");
+        System.out.println("          RESULTADO FINAL");
+        System.out.println("═══════════════════════════════════════");
 
         if (jugador.estaVivo()) {
 
-            System.out.println("¡Ganaste!");
+            System.out.println("🏆 ¡GANASTE EL TORNEO!");
 
         } else {
 
-            System.out.println("Perdiste...");
+            System.out.println("💀 HAS SIDO DERROTADO");
         }
-         
+
+        System.out.println("═══════════════════════════════════════");
     }
 }
