@@ -2,7 +2,26 @@ package com.mycompany.poke;
 import java.util.ArrayList;
 import java.util.Scanner;
 public class POKE {
+        public static int pedirOpcionValida(Scanner sc, int minimo, int maximo) {
 
+    int opcion;
+
+    while (true) {
+
+        if (sc.hasNextInt()) {
+
+            opcion = sc.nextInt();
+
+            if (opcion >= minimo && opcion <= maximo) {
+                return opcion;
+            }
+        } else {
+            sc.next(); // descarta texto inválido
+        }
+
+        System.out.print("Opción inválida. Intenta nuevamente: ");
+    }
+}
     
     public static void main(String[] args) {
        Scanner sc = new Scanner(System.in);
@@ -87,9 +106,16 @@ public class POKE {
             
         }
         
-        // ahora queremos la opcion del jugador a elegir
+        //queremos la opcion del jugador a elegir
         
-        int opcionPokemon = sc.nextInt();
+       System.out.print("Selecciona un Pokémon: ");
+
+int opcionPokemon =
+        pedirOpcionValida(
+                sc,
+                1,
+                pokemones.size()
+        );
         
         // jugador
         Pokemon jugador =
@@ -149,9 +175,15 @@ public class POKE {
                         + jugador.ataques.get(i).nombre
                 );
             }
+          
+           System.out.print("Selecciona un ataque: ");
 
-            int opcionAtaque =
-                    sc.nextInt();
+int opcionAtaque =
+        pedirOpcionValida(
+                sc,
+                1,
+                jugador.ataques.size()
+        );
 
             Ataque ataqueElegido =
                     jugador.ataques.get(
